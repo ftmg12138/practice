@@ -13,9 +13,18 @@ int main()
         {
             for(int k=0;k<s3;k++)
             {
-                a[i+j+k]++;
+                a[i+j+k+3]++;
             }
         }
     }
-    cout<<*max_element(a.begin(),a.end()); // Fix: Dereference the iterator before using the << operator.
+    int max=-1,max_id=0;
+    for(int i=0;i<81;i++)
+    {
+        if(a[i]>max)
+        {
+            max=a[i];
+            max_id=i;
+        }
+    }
+    cout<<max_id;
 }
