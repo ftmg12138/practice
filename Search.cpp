@@ -25,7 +25,7 @@ bool searchAndOpenFile(const std::string& directory, const std::string& targetFi
         } else {
             if (currentFileName == targetFileName) {
                 std::cout << "Found file: " << directory << "\\" << currentFileName << std::endl;
-                std::string command = "start \"\" \"" + directory + "\\" + currentFileName + "\"";
+                std::string command = "code \"\" \"" + directory + "\\" + currentFileName + "\"";
                 std::system(command.c_str());
                 found = true;
                 break;
@@ -42,19 +42,25 @@ int main() {
     std::string problemNumber;
     std::string targetFileName;
 
-    std::cout << "Enter problem number: ";
-    std::cin >> problemNumber;
-    targetFileName = problemNumber + ".cpp";  // 组合文件名
+    while (true) {
+        std::cout << "Enter problem number: ";
+        std::cin >> problemNumber;
+        targetFileName = problemNumber + ".cpp";  // 组合文件名
+        bool found = searchAndOpenFile(rootPath, targetFileName);
 
-    bool found = searchAndOpenFile(rootPath, targetFileName);
+        if (!found) {
+            std::cout << "File not found." << std::endl;
+        }
 
-    if (!found) {
-        std::cout << "File not found." << std::endl;
+        std::cout << "Press enter to continue or 'q' to quit, 'r' to restart..." << std::endl;
+        std::cin.ignore();  // 清除之前的输入缓冲区
+        char nextAction = std::cin.get();
+        if (nextAction == 'q') {
+            break;
+        } else if (nextAction == 'r') {
+            continue;
+        }
     }
-
-    std::cout << "Press enter to exit..." << std::endl;
-    std::cin.get();  // 清除之前的输入缓冲区
-    std::cin.get();  // 等待用户输入
 
     return 0;
 }
